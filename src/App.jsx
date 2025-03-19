@@ -1,20 +1,14 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import Login from './components/Login'
-import Browse from './components/Browse'
+import Body from './components/Body' // Use Body instead of Login/Browse
+import { Provider } from 'react-redux'
+import appStore from './utils/appStore'
 
 function App() {
-
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Login />} />
-          <Route path='/browse' element={<Browse />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+    <Provider store={appStore}>
+      <Body />
+    </Provider>
   )
 }
 
-export default App
+export default App;
