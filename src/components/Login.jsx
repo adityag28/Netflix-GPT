@@ -1,18 +1,17 @@
-import React, { use, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Header from './Header'
 import { checkValidData } from '../utils/validate'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase'
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { NETFLIX_BG, USER_AVATAR } from '../utils/constant';
 
 
 const Login = () => {
 
     const [isSignInForm, setIsSignInForm] = useState(true)
     const [errorMessage, setErrorMessage] = useState(null)
-    const navigate = useNavigate()
     const dispatch = useDispatch()
 
 
@@ -40,7 +39,7 @@ const Login = () => {
                     const user = userCredential.user;
                     updateProfile(user, {
                         displayName: name.current.value,
-                        photoURL: "https://media.licdn.com/dms/image/v2/D4D03AQHn_W4vcFi7UQ/profile-displayphoto-shrink_800_800/B4DZUXxcQqG8Ac-/0/1739860592736?e=1747872000&v=beta&t=ZeE27x60yiVsTS7v1pQ7zgjavs613MJNlM8NhNj3jKE"
+                        photoURL: { USER_AVATAR }
                     }).then(() => {
                         // Profile updated!
                         const { uid, email, photoURL, displayName } = auth.currentUser;
@@ -52,7 +51,6 @@ const Login = () => {
                                 name: displayName
                             })
                         );
-                        navigate('/browse')
                     }).catch((error) => {
                         // An error occurred
                         // ...
@@ -70,7 +68,6 @@ const Login = () => {
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-                    navigate('/browse')
 
                 })
                 .catch((error) => {
@@ -86,7 +83,7 @@ const Login = () => {
         <div>
             <Header />
             <div className='absolute'>
-                <img src="https://assets.nflxext.com/ffe/siteui/vlv3/50fcc930-ba3f-4cae-9257-9f920e30a998/web/IN-en-20250310-TRIFECTA-perspective_739387a0-ff14-44ed-a5af-36e5aa4d236e_large.jpg" alt="netflix background"
+                <img src={NETFLIX_BG} alt="netflix background"
                 />
             </div>
             <form
